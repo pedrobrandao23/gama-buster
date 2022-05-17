@@ -1,4 +1,4 @@
-const ProductController = {
+const FilmesController = {
     
     // Listar todos
     index: (req, res) => {
@@ -7,7 +7,7 @@ const ProductController = {
 
     // Criação de um novo produto
     store: (req, res) => {
-        res.json([]);
+        res.json(req.body);
     },
 
     // Obter item específico
@@ -16,8 +16,13 @@ const ProductController = {
     
         res.json({
             id,
-            name: `Produto ${id}`,
-            price: 300,
+            name: `Filme ${id}`,
+            generos: [
+                {
+                  id: 1,
+                  name: "Comédia",
+                },
+              ],
         });
     },
 
@@ -38,5 +43,5 @@ const ProductController = {
 };
     
 
-module.exports = ProductController;
+module.exports = FilmesController;
 

@@ -5,82 +5,57 @@ const express = require('express');
 const routes = express.Router();
 
 // faz a requisição do Controller para esse arquivo
-const produtoController = require('../controllers/produtoController');
+
 const HomeController = require('../controllers/home');
-const ProductController = require('../controllers/product')
+const ClientesController = require('../controllers/clientes');
+const FilmesController = require('../controllers/filmes');
+const GenerosController = require('../controllers/generos');
+const ReservasController = require('../controllers/reservas');
+
+
+//-------------------------------------------------------------------------------------------------------------------------
+// Rota Home
+
+routes.get("/", HomeController.index)
+
+//-------------------------------------------------------------------------------------------------------------------------
+// Rotas do cliente.js
+
+routes.get("/clientes", ClientesController.index);
+routes.post("/clientes", ClientesController.store);
+routes.get("/clientes/:id", ClientesController.show);
+routes.put("/clientes/:id", ClientesController.update);
+routes.delete("/clientes/:id", ClientesController.destroy);
+
+//-------------------------------------------------------------------------------------------------------------------------
+// Rotas do filme.js
+
+routes.get("/filmes", FilmesController.index);
+routes.post("/filmes", FilmesController.store);
+routes.get("/filmes/:id", FilmesController.show);
+routes.put("/filmes/:id", FilmesController.update);
+routes.delete("/filmes/:id", FilmesController.destroy);
+
+//-------------------------------------------------------------------------------------------------------------------------
+// Rotas do genero.js
+
+routes.get("/generos", GenerosController.index);
+routes.post("/generos", GenerosController.store);
+routes.get("/generos/:id", GenerosController.show);
+routes.put("/generos/:id", GenerosController.update);
+routes.delete("/generos/:id", GenerosController.destroy);
+
+//-------------------------------------------------------------------------------------------------------------------------
+// Rotas do genero.js
+
+routes.get("/reservas", ReservasController.index);
+routes.post("/reservas", ReservasController.store);
+routes.get("/reservas/:id", ReservasController.show);
+routes.put("/reservas/:id", ReservasController.update);
+routes.delete("/reservas/:id", ReservasController.destroy);
 
 //-------------------------------------------------------------------------------------------------------------------------
 
-// Rotas criadas neste próprio arquivo (menos organizado e mais difícil de fazer manutenção)
 
-routes.get("/produto/:id/:categoria", (req, res) => {
-    console.log(req.params);
-    res.send("boa");
-});
-
-routes.post("/cadastrar", (req, res) => {
-    console.log(req.body);
-    res.json(req.body);
-});
-
-// Rotas criadas com mais organização a partir do objeto que está no produtoController.js
-
-routes.get("/produto/lista", produtoController.listarProdutos);
-
-routes.post("/produto/cadastrar", produtoController.cadastrarProdutos);
-
-
-routes.get("/", HomeController.sayHello);
-//-------------------------------------------------------------------------------------------------------------------------
-
-
-// Exercícios: criar rota /products para cadastro de produtos que responda reqs pelos metodos get, post, put, delete.
-
-//get todos os produtos
-routes.get("/produto/lista-produtos", (req, res) =>{
-    res.json([])
-});
-
-// get por id
-routes.get("/produto/lista-produtos/:id", (req, res) => {
-    const { id } = req.params;
-
-    res.json({
-        id,
-        name: `Produto ${id}`,
-        price: 300,
-    });
-});
-
-//post 
-routes.post("/produto/cadastrar-produto", (req, res) => {
-    res.json(req.body)
-});
-
-//put
-routes.put("/produto/atualizar-produto/:id", (req, res) => {
-    const { id } = req.params;
-
-    res.json({
-        id,
-        ... (req.body || {})
-    });
-});
-
-// delete
-routes.delete("/produto/excluir/:id", (req, res) => {
-    res.status(204).send("");
-});
-
-//-------------------------------------------------------------------------------------------------------------------------
-// Rotas do product.js
-
-routes.get("/products", ProductController.index);
-routes.post("/products", ProductController.store);
-routes.get("/products/:id", ProductController.show);
-routes.put("/products/:id", ProductController.update);
-routes.delete("/products/:id", ProductController.destroy);
-
-//-------------------------------------------------------------------------------------------------------------------------
 // Necessário para que o arquivo do controller receba as rotas
 module.exports = routes;
