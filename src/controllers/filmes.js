@@ -1,43 +1,70 @@
+const Filmes = require("../models/Filmes");
+
 const FilmesController = {
     
     // Listar todos
-    index: (req, res) => {
-        res.json([]);
+    index: async (req, res) => {
+        const listaDeFilmes = await Filmes.findAll();
+        res.json([listaDeFilmes]);
     },
 
     // Criação de um novo produto
-    store: (req, res) => {
-        res.json(req.body);
+    store: async (req, res) => {
+        const { nome, ano_lancamento, duracao, estoque } = req.body;
+
+        const novoFilme = await Filmes.create({ 
+            nome,
+            ano_lancamento,
+            duracao,
+            estoque 
+        });
+
+        res.json(novoFilme);
     },
 
     // Obter item específico
-    show: (req, res) => {
+    show: async (req, res) => {
         const { id } = req.params;
     
-        res.json({
-            id,
-            name: `Filme ${id}`,
-            generos: [
-                {
-                  id: 1,
-                  name: "Comédia",
-                },
-              ],
+        const filmes = await Filmes.findByPk(id);
+
+        if (filmes) {
+            return res.json(filmes);
+        };
+
+        res.status(404).json({
+            message: "Filme não encontrado"
         });
     },
 
     // Atualização
-    update: (req, res) => {
+    update: async (req, res) => {
         const { id } = req.params;
-    
-        res.json({
-            id,
-            ... (req.body || {})
+        const { nome, ano_lancamento, duracao, estoque } = req.body;
+
+        const filmeAtualizado = await Filmes.update({ 
+            nome,
+            ano_lancamento,
+            duracao,
+            estoque 
+        },
+        {
+            where: {
+                codigo: id
+            }
         });
+    
+        res.json("Filme atualizado");
     },
 
     // Remoção
-    destroy: (req, res) => {
+    destroy: async (req, res) => {
+        const { id } = req.params;
+        await Filmes.destroy({
+            where:{
+                codigo: id
+            }
+        })
         res.status(204).send("");
     }
 };

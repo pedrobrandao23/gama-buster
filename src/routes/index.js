@@ -46,7 +46,7 @@ routes.put("/generos/:id", GenerosController.update);
 routes.delete("/generos/:id", GenerosController.destroy);
 
 //-------------------------------------------------------------------------------------------------------------------------
-// Rotas do genero.js
+// Rotas da reserva.js
 
 routes.get("/reservas", ReservasController.index);
 routes.post("/reservas", ReservasController.store);

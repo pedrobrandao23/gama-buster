@@ -10,10 +10,9 @@ const ClientesController = {
 
     // Criação de um novo produto
     store: async (req, res) => {
-        const { codigo, cpf, email, nascimento, nome, sobrenome, telefone } = req.body;
+        const { cpf, email, nascimento, nome, sobrenome, telefone } = req.body;
 
         const novoCliente = await Clientes.create({
-            codigo,
             cpf,
             email,
             nascimento,
@@ -36,7 +35,7 @@ const ClientesController = {
         };
 
         res.status(404).json({
-            message: "Genero não encontrado"
+            message: "Cliente não encontrado"
         })
     },
 
@@ -57,7 +56,7 @@ const ClientesController = {
             where: {
                 codigo: id
             }
-        })
+        });
     
         res.json("Cliente atualizado");
     },
