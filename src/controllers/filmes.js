@@ -1,10 +1,10 @@
-const Filmes = require("../models/Filmes");
+const { Filmes, Generos } = require("../models");
 
 const FilmesController = {
     
     // Listar todos
     index: async (req, res) => {
-        const listaDeFilmes = await Filmes.findAll();
+        const listaDeFilmes = await Filmes.findAll({ include: Generos });
         res.json([listaDeFilmes]);
     },
 

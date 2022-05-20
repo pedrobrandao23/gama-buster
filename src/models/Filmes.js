@@ -30,7 +30,7 @@ const Filmes = db.define(
     }
   },
   {
-    tableName: "filme", timestamps: false
+    tableName: "filme", timestamps: false, underscored: true
   }
 );
 

@@ -39,7 +39,8 @@ const Clientes = db.define(
     },
     {
         tableName: "clientes",
-        timestamps: false
+        timestamps: false,
+        underscored: true
     }
 );
 
